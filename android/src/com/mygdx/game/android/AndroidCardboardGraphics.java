@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
@@ -50,8 +51,6 @@ public class AndroidCardboardGraphics implements Graphics, StereoRenderer {
 	private static final String LOG_TAG = "AndroidCardboardGraphics";
 	static volatile boolean enforceContinuousRendering = false;
 	
-	private static final Matrix4 HEAD_ROTATION = new Matrix4();
-
 	final CardboardView view;
 	int width;
 	int height;
@@ -90,6 +89,7 @@ public class AndroidCardboardGraphics implements Graphics, StereoRenderer {
 		this.config = config;
 		this.view = new CardboardView(application.getContext());
 		this.view.setRenderer(this);
+		this.view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));		
 	}
 
 	@Override

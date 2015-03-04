@@ -82,13 +82,7 @@ public class AndroidCardboardApplication extends CardboardActivity implements An
 		}
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		setContentView(graphics.getView(), createLayoutParams());
-	}
-	
-	protected FrameLayout.LayoutParams createLayoutParams () {
-		FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-		layoutParams.gravity = Gravity.CENTER;
-		return layoutParams;
+		setContentView(graphics.getView());
 	}
 
 	@Override

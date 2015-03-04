@@ -11,6 +11,6 @@ public class AndroidLauncher extends AndroidCardboardApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new MyGdxCardboardGame(), config);
+		initialize(new MyGdxCardboardGame(this), config);
 	}
 }
