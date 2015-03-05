@@ -1,11 +1,12 @@
-package com.mygdx.game.android;
+package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.google.vrtoolkit.cardboard.Eye;
 import com.google.vrtoolkit.cardboard.HeadTransform;
 import com.google.vrtoolkit.cardboard.Viewport;
 
-public abstract class CardboardApplicationAdapter extends ApplicationAdapter {
+
+public abstract class CardboardCompatibleApplicationAdapter extends ApplicationAdapter {
 
 	public abstract void newFrame(HeadTransform transform);
 	

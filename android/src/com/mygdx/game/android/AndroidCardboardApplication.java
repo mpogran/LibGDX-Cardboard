@@ -4,12 +4,9 @@ import android.content.Context;
 import android.os.Debug;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
@@ -17,25 +14,21 @@ import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationBase;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidAudio;
 import com.badlogic.gdx.backends.android.AndroidClipboard;
 import com.badlogic.gdx.backends.android.AndroidFiles;
-import com.badlogic.gdx.backends.android.AndroidGraphics;
 import com.badlogic.gdx.backends.android.AndroidInput;
 import com.badlogic.gdx.backends.android.AndroidInputFactory;
 import com.badlogic.gdx.backends.android.AndroidNet;
 import com.badlogic.gdx.backends.android.AndroidPreferences;
-import com.badlogic.gdx.backends.android.surfaceview.FillResolutionStrategy;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Clipboard;
 import com.badlogic.gdx.utils.GdxNativesLoader;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.google.vrtoolkit.cardboard.CardboardActivity;
-import com.google.vrtoolkit.cardboard.CardboardView;
+import com.mygdx.game.CardboardCompatibleApplicationAdapter;
 
 public class AndroidCardboardApplication extends CardboardActivity implements AndroidApplicationBase {
 	static {
@@ -47,14 +40,14 @@ public class AndroidCardboardApplication extends CardboardActivity implements An
 	protected AndroidAudio audio;
 	protected AndroidFiles files;
 	protected AndroidNet net;
-	protected CardboardApplicationAdapter listener;
+	protected CardboardCompatibleApplicationAdapter listener;
 	public Handler handler;
 	protected final Array<Runnable> runnables = new Array<Runnable>();
 	protected final Array<Runnable> executedRunnables = new Array<Runnable>();
 	protected final Array<LifecycleListener> lifecycleListeners = new Array<LifecycleListener>();
 	protected int logLevel = LOG_INFO;
 	
-	public void initialize (CardboardApplicationAdapter listener, AndroidApplicationConfiguration config) {
+	public void initialize (CardboardCompatibleApplicationAdapter listener, AndroidApplicationConfiguration config) {
 		if (this.getVersion() < MINIMUM_SDK) {
 			throw new GdxRuntimeException("LibGDX requires Android API Level " + MINIMUM_SDK + " or later.");
 		}        
@@ -86,7 +79,7 @@ public class AndroidCardboardApplication extends CardboardActivity implements An
 	}
 
 	@Override
-	public CardboardApplicationAdapter getApplicationListener() {
+	public CardboardCompatibleApplicationAdapter getApplicationListener() {
 		return this.listener;
 	}
 
