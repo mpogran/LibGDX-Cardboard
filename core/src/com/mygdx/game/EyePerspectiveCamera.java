@@ -1,19 +1,19 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Matrix4;
 import com.google.vrtoolkit.cardboard.Eye;
 
-public class EyePerspectiveCamera extends PerspectiveCamera {
+public class EyePerspectiveCamera extends Camera {
 
-	private EyePerspectiveCamera(float fieldOfView, float viewportWidth, float viewportHeight) {
-		super(fieldOfView, viewportWidth, viewportHeight);
-	}
 	
-	public static EyePerspectiveCamera createEyePerspectiveCamera(Eye eye, PerspectiveCamera camera) {
-		EyePerspectiveCamera rv = new EyePerspectiveCamera(camera.fieldOfView, camera.viewportWidth, camera.viewportHeight);
+	public static EyePerspectiveCamera createEyePerspectiveCamera(Eye eye, Camera camera) {
+		EyePerspectiveCamera rv = new EyePerspectiveCamera();
 		
-		rv.view.set(eye.getEyeView());		
+		Matrix4 eyeView = new Matrix4(eye.getEyeView());
+		eyeView.translate(-camera.position.x, -camera.position.y, -camera.position.z);
+		
+		rv.view.set(eyeView);		
 		rv.projection.set(eye.getPerspective(camera.near, camera.far));
       
 		rv.combined.set(rv.projection);
@@ -22,10 +22,15 @@ public class EyePerspectiveCamera extends PerspectiveCamera {
 		rv.invProjectionView.set(rv.combined);
 		Matrix4.inv(rv.invProjectionView.val);
 		rv.frustum.update(rv.invProjectionView);
-		
+						
 		return rv;
 	}
-	
+
+	@Override
+	public void update(boolean updateFrustum) {
+		// Do nothing
+	}
+
 	@Override
 	public void update() {
 		// Do nothing -- let Cardboard handle camera movement

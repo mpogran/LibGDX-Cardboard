@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -45,7 +45,7 @@ public class MyGdxGame extends CardboardCompatibleApplicationAdapter {
 	public void create() {
 		this.modelBatch = new ModelBatch();
 		
-		Vector3 cubePosition = new Vector3(0.0f, 5.0f, -5.0f);
+		Vector3 cubePosition = new Vector3(0.0f, 2.0f, -7.5f);
 		
 		this.monoCamera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.monoCamera.position.set(0.0f, 5.0f, 0.0f);
@@ -55,17 +55,18 @@ public class MyGdxGame extends CardboardCompatibleApplicationAdapter {
 		this.monoCamera.update();
 				
 		this.environment = new Environment();
-		this.environment.set(new ColorAttribute(ColorAttribute.Ambient, 0.8f, 0.8f, 0.8f, 1.0f));
-		this.environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, 0.0f, -0.8f, -0.2f));
+		this.environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1.f));
+		this.environment.set(new ColorAttribute(ColorAttribute.Fog, 0.13f, 0.13f, 0.13f, 1f));
+		this.environment.add(new PointLight().set(Color.WHITE, 10.0f, 0.0f, 20.0f, 200.0f));
         
         ModelBuilder modelBuilder = new ModelBuilder();     
-        this.cubeModel = modelBuilder.createBox(2.0f, 2.0f, 2.0f, new Material(ColorAttribute.createDiffuse(Color.GREEN)), Usage.Position | Usage.Normal);        
+        this.cubeModel = modelBuilder.createBox(2.0f, 2.0f, 2.0f, new Material(ColorAttribute.createDiffuse(Color.WHITE)), Usage.Position | Usage.Normal);        
         this.cubeInstance = new ModelInstance(cubeModel);
         this.cubeInstance.transform.setToTranslation(cubePosition);
         
         this.groundDecal = Decal.newDecal(200, 200, new TextureRegion(new Texture(Gdx.files.internal("grass.png"))));
         this.groundDecal.setColor(Color.LIGHT_GRAY);
-        this.groundDecal.setPosition(0.0f, -10.0f, 0.0f);
+        this.groundDecal.setPosition(0.0f, 0.0f, 0.0f);
         this.groundDecal.rotateX(90);
            
         this.instances.addAll(this.cubeInstance);
@@ -107,7 +108,9 @@ public class MyGdxGame extends CardboardCompatibleApplicationAdapter {
 	}
 	
 	private void performPerFrame() {
-		cubeInstance.transform.rotate(0.5f, 0.5f, 1.0f, TIME_DELTA);	
+		cubeInstance.transform.rotate(0.5f, 0.5f, 1.0f, TIME_DELTA);
+		
+		Gdx.gl.glClearColor(0.588f, 0.886f, 0.988f, 1.0f);
 	}
 	
 	private void render(Camera camera) {
